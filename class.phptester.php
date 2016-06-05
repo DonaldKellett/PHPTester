@@ -9,7 +9,7 @@ try {
 
     /* Random Output Methods */
     public function random_number($min = 0, $max = 100);
-    # public function random_token($length = 10);
+    public function random_token($length = 10);
     # public function randomize($array);
 
     /* Pass/Fail Methods */
@@ -48,6 +48,13 @@ try {
     protected $describing = false;
     public function random_number($min = 0, $max = 100) {
       return rand($min, $max);
+    }
+    public function random_token($length = 10) {
+      $token = "";
+      for ($i = 0; $i < $length; $i++) {
+        $token .= str_split("abcdefghijklmnopqrstuvwxyz0123456789")[floor(lcg_value() * 36)];
+      }
+      return $token;
     }
   }
 } catch (TypeError $e) {
