@@ -4,12 +4,13 @@ try {
     /* TODO: Uncomment all methods and implement all of them properly by v3.0.0 release */
 
     /* Spec Methods */
-    # public function describe($msg = "Default Message", $fn);
-    # public function it($msg = "Default Message", $fn);
+    # public function describe($msg, $fn);
+    # public function it($msg, $fn);
 
     /* Random Output Methods */
     # public function random_number();
     # public function random_token($length = 10);
+    # public function randomize($array);
 
     /* Pass/Fail Methods */
 
@@ -32,8 +33,14 @@ try {
     # public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
     # public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
   }
+  class PHPTesterException extends Exception {
+    
+  }
   class PHPTester implements PHPTesterInterface {
-
+    protected $passes = 0;
+    protected $fails = 0;
+    protected $errors = 0;
+    protected $describing = false;
   }
 } catch (TypeError $e) {
   echo "Failed to load PHPTester<br />";
