@@ -1,4 +1,4 @@
 <?php
 require 'class.phptester.php';
-echo "HELLO WORLD"; // NoError check
+echo new PHPTesterException("The Exception Message");
 ?>
