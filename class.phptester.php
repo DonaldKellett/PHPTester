@@ -8,7 +8,7 @@ try {
     # public function it($msg, $fn);
 
     /* Random Output Methods */
-    # public function random_number();
+    public function random_number($min = 0, $max = 100);
     # public function random_token($length = 10);
     # public function randomize($array);
 
@@ -46,6 +46,9 @@ try {
     protected $fails = 0;
     protected $errors = 0;
     protected $describing = false;
+    public function random_number($min = 0, $max = 100) {
+      return rand($min, $max);
+    }
   }
 } catch (TypeError $e) {
   echo "Failed to load PHPTester<br />";

@@ -1,4 +1,6 @@
 <?php
 require 'class.phptester.php';
-echo new PHPTesterException("The Exception Message");
+for ($i = 0; $i < 1000; $i++) {
+  echo (new PHPTester)->random_number() . "<br />";
+}
 ?>
