@@ -10,8 +10,8 @@ try {
     /* Random Output Methods */
     public function random_number($min = 0, $max = 100);
     public function random_token($length = 10);
-    # public function randomize($array);
-
+    public function randomize($array);
+    
     /* Pass/Fail Methods */
 
     // Core
@@ -55,6 +55,14 @@ try {
         $token .= str_split("abcdefghijklmnopqrstuvwxyz0123456789")[floor(lcg_value() * 36)];
       }
       return $token;
+    }
+    public function randomize($array) {
+      for ($i = 0; $i < 2 * count($array); $i++) {
+        $a = rand(0, count($array) - 1);
+        $b = rand(0, count($array) - 1);
+        list($array[$a], $array[$b]) = array($array[$b], $array[$a]);
+      }
+      return $array;
     }
   }
 } catch (TypeError $e) {

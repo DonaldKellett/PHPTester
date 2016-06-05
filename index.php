@@ -1,10 +1,9 @@
 <?php
 require 'class.phptester.php';
-for ($i = 0; $i < 1000; $i++) {
-  echo (new PHPTester)->random_token() . "<br />";
-  echo (new PHPTester)->random_token(1) . "<br />";
-  echo (new PHPTester)->random_token(5) . "<br />";
-  echo (new PHPTester)->random_token(20) . "<br />";
-  echo (new PHPTester)->random_token(50) . "<br />";
+$arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+echo "Initial Array: " . implode(", ", $arr) . "<br />";
+for ($i = 0; $i < 100; $i++) {
+  echo implode(", ", (new PHPTester)->randomize($arr)) . "<br />";
 }
+echo "Final Array: " . implode(", ", $arr) . "<br />";
 ?>
