@@ -61,6 +61,10 @@ try {
       return $token;
     }
     public function randomize($array) {
+      if (!is_array($array)) throw new TypeError("In PHPTester::randomize, \$array must be a valid array");
+      foreach ($array as $key => $value) {
+        if (!is_int($key)) throw new TypeError("In PHPTester::randomize, \$array cannot be an associative array");
+      }
       for ($i = 0; $i < 2 * count($array); $i++) {
         $a = rand(0, count($array) - 1);
         $b = rand(0, count($array) - 1);
