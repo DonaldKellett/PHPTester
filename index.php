@@ -3,37 +3,36 @@ require 'class.phptester.php';
 $test = new PHPTester;
 $test->describe("PHPTester", function () {
   global $test;
-  $test->it("should have a fully functioning 'it' block", function () {
+  $test->it("should have a working 'expect' method", function () {
     global $test;
-    $test->it("should work");
+
+    # Passing Tests with Default Message
+    $test->expect(true);
+    $test->expect(true);
+    $test->expect(true);
+    $test->expect(true);
+    $test->expect(true);
+
+    # Passing Tests with Custom Message
+    $test->expect(true, "", "Hooray!  You passed the test.");
+    $test->expect(true, "", "Hooray!  You passed the test.");
+    $test->expect(true, "", "Hooray!  You passed the test.");
+    $test->expect(true, "", "Hooray!  You passed the test.");
+    $test->expect(true, "", "Hooray!  You passed the test.");
+
+    # Failing Tests with Default Message
+    $test->expect(false);
+    $test->expect(false);
+    $test->expect(false);
+    $test->expect(false);
+    $test->expect(false);
+
+    # Failing Tests with Custom Message
+    $test->expect(false, "You failed, better luck next time");
+    $test->expect(false, "You failed, better luck next time");
+    $test->expect(false, "You failed, better luck next time");
+    $test->expect(false, "You failed, better luck next time");
+    $test->expect(false, "You failed, better luck next time");
   });
-  $test->it("should have a fully functioning 'it' block", function () {
-    global $test;
-    $test->it("should work");
-  });
-  $test->it("should have a fully functioning 'it' block", function () {
-    global $test;
-    $test->it("should work");
-  });
-  $test->it("should have a fully functioning 'it' block", function () {
-    global $test;
-    $test->it("should work");
-  });
-  $test->it("should have a fully functioning 'it' block", function () {
-    global $test;
-    $test->it("should work");
-  });
-});
-$test->describe("PHPTester", function () {
-  global $test;
-  $test->it("should have a fully functioning 'it' block", function () {});
-});
-$test->describe("PHPTester", function () {
-  global $test;
-  $test->it("should have a fully functioning 'it' block", function () {});
-});
-$test->describe("PHPTester", function () {
-  global $test;
-  $test->it("should have a fully functioning 'it' block", function () {});
 });
 ?>

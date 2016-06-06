@@ -15,7 +15,7 @@ try {
     /* Pass/Fail Methods */
 
     // Core
-    # public function expect($passed, $msg = "Default Message", $success = "Default Success Message");
+    public function expect($passed, $msg = "Default Message", $success = "Default Success Message");
 
     // Primitives
     # public function assert_equals($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
@@ -138,6 +138,15 @@ try {
       }
       echo "</div>";
       $this->using_it = false;
+    }
+    public function expect($passed, $msg = "Value was not what was expected", $success = "Test Passed") {
+      if ($passed) {
+        $this->passes++;
+        echo "<span style='color:lime'>$success</span><br />";
+      } else {
+        $this->fails++;
+        echo "<span style='color:red'>$msg</span><br />";
+      }
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
