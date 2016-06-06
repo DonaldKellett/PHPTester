@@ -52,6 +52,8 @@ try {
       return rand($min, $max);
     }
     public function random_token($length = 10) {
+      if (!is_int($length)) throw new TypeError("In PHPTester::random_token, \$length must be a valid integer");
+      if ($length <= 0) throw new TypeError("In PHPTester::random_token, \$length must be a positive integer");
       $token = "";
       for ($i = 0; $i < $length; $i++) {
         $token .= str_split("abcdefghijklmnopqrstuvwxyz0123456789")[floor(lcg_value() * 36)];
