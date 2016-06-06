@@ -8,6 +8,14 @@ $array = ["Hello", "World", "bacon", 3.14, 42, true, false];
 for ($i = 0; $i < 10; $i++) {
   echo implode(",", (new PHPTester)->randomize($array)) . "<br />";
 }
+$array = [true, true, true, true, false, false, false, false];
+for ($i = 0; $i < 10; $i++) {
+  echo implode(",", (new PHPTester)->randomize($array)) . "<br />";
+}
+$array = ["This", "array", "contains", "strings", "only"];
+for ($i = 0; $i < 10; $i++) {
+  echo implode(",", (new PHPTester)->randomize($array)) . "<br />";
+}
 try {
   (new PHPTester)->randomize(true);
 } catch (TypeError $e) {
