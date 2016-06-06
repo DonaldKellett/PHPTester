@@ -11,7 +11,7 @@ try {
     public function random_number($min = 0, $max = 100);
     public function random_token($length = 10);
     public function randomize($array);
-    
+
     /* Pass/Fail Methods */
 
     // Core
@@ -47,6 +47,8 @@ try {
     protected $errors = 0;
     protected $describing = false;
     public function random_number($min = 0, $max = 100) {
+      if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
+      if ($min >= $max) throw new TypeError("In PHPTester::random_number, \$min must be smaller than \$max");
       return rand($min, $max);
     }
     public function random_token($length = 10) {

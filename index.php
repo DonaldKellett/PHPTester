@@ -1,9 +1,25 @@
 <?php
 require 'class.phptester.php';
-$arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-echo "Initial Array: " . implode(", ", $arr) . "<br />";
-for ($i = 0; $i < 100; $i++) {
-  echo implode(", ", (new PHPTester)->randomize($arr)) . "<br />";
+echo (new PHPTester)->random_number() . "<br />";
+try {
+  echo (new PHPTester)->random_number("hello");
+} catch (TypeError $e) {
+  echo "$e<br />";
 }
-echo "Final Array: " . implode(", ", $arr) . "<br />";
+try {
+  echo (new PHPTester)->random_number(34, "world");
+} catch (TypeError $e) {
+  echo "$e<br />";
+}
+try {
+  echo (new PHPTester)->random_number(42, 42);
+} catch (TypeError $e) {
+  echo "$e<br />";
+}
+try {
+  echo (new PHPTester)->random_number(66, 42);
+} catch (TypeError $e) {
+  echo "$e<br />";
+}
+echo (new PHPTester)->random_number(-100, 0);
 ?>
