@@ -5,7 +5,7 @@ try {
 
     /* Spec Methods */
     public function describe($msg, $fn);
-    # public function it($msg, $fn);
+    public function it($msg, $fn);
 
     /* Random Output Methods */
     public function random_number($min = 0, $max = 100);
@@ -50,6 +50,9 @@ try {
     public function describe($msg, $fn) {
       if ($this->describing) throw new PHPTesterException("A describe block cannot be nested in another describe block!");
       $this->describing = true;
+      $this->passes = 0;
+      $this->fails = 0;
+      $this->errors = 0;
       $console_id = "console_" . $this->random_token();
       echo "<div id='$console_id' style='color:white;background-color:black;padding:10px;font-family:monospace;font-size:18px'>";
       echo "<strong>$msg</strong>";
@@ -96,6 +99,45 @@ try {
       echo "<br />";
       echo "<script>document.getElementById('$console_id').style.border = '5px solid " . ($this->passes > 0 && $this->fails === 0 && $this->errors === 0 ? "lime" : "red") . "';</script>";
       $this->describing = false;
+    }
+    public function it($msg, $fn) {
+      if (!$this->describing) throw new PHPTesterException("An 'it' context must be wrapped in a 'describe' context!");
+      if ($this->using_it) throw new PHPTesterException("An 'it' context cannot be nested within another 'it' context!");
+      $this->using_it = true;
+      echo "<strong>$msg</strong>";
+      echo "<div style='margin-left:30px'>";
+      try {
+        $fn();
+      } catch (PHPTesterException $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (TypeError $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (ParseError $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (DivisionByZeroError $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (AssertionError $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (ArithmeticError $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (Error $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (ErrorException $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      } catch (Exception $e) {
+        $this->errors++;
+        echo "<span style='color:red'>$e</span><br />";
+      }
+      echo "</div>";
+      $this->using_it = false;
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
