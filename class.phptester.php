@@ -148,6 +148,18 @@ try {
         echo "<span style='color:red'>$msg</span><br />";
       }
     }
+    protected function display($input) {
+      if ($input === true) return "true";
+      if ($input === false) return "false";
+      if ($input === NULL) return "NULL";
+      if (is_int($input) || is_float($input)) return $input;
+      if (is_string($input)) return '"' . htmlspecialchars($input) . '"';
+      if (is_array($input)) return "array(" . (count($input) === 0 ? "" : "<div style='margin-left:30px'>" . implode(",<br />", array_map(function ($key, $value) {return $this->display($key) . " =&gt; " . $this->display($value);}, array_keys($input), $input)) . "</div>") . ")";
+      $result = "object {<div style='margin-left:30px'>";
+      foreach ($input as $property => $value) $result .= "public \$$property = " . $this->display($value) . ";<br />";
+      $result .= "</div>}";
+      return $result;
+    }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
       if ($min >= $max) throw new TypeError("In PHPTester::random_number, \$min must be smaller than \$max");
