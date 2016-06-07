@@ -190,5 +190,24 @@ $test->describe("PHPTester", function () {
     # Error
     $test->assert_not_fuzzy_equals(M_PI, "Hello World");
   });
+  $test->it("should have a working expect_error method", function () {
+    global $test;
+
+    # Passing Tests
+    $test->expect_error("A PHPTesterException was not thrown", function () {
+      throw new PHPTesterException("This exception should pass the test.");
+    });
+    $test->expect_error("Expected error was not thrown", function () {
+      throw new ErrorException;
+    });
+
+    # Failing Tests
+    $test->expect_error("A PHPTesterException was not thrown", function () {
+      echo new PHPTesterException("Now this should fail the test") . "<br />";
+    });
+    $test->expect_error("Expected error was not thrown", function () {
+      echo new ErrorException . "<br />";
+    });
+  });
 });
 ?>

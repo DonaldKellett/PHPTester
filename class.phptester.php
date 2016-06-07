@@ -22,7 +22,7 @@ try {
     public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
 
     // Errors
-    # public function expect_error($msg, $fn);
+    public function expect_error($msg, $fn);
     # public function expect_no_error($msg, $fn);
 
     // Arrays (and primitives)
@@ -177,6 +177,40 @@ try {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($unexpected) && !is_float($unexpected))) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, both the actual and unexpected values must be valid numbers!");
       if (!is_int($precision)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$precision must be a valid integer!");
       $this->expect(round($actual, $precision) !== round($unexpected, $precision), "$msg - Rounded value was expected to not equal: " . $this->display(round($unexpected, $precision)), "$success - Value !== " . $this->display(round($unexpected, $precision)));
+    }
+    public function expect_error($msg, $fn) {
+      $error_thrown = !1;
+      try {
+        $fn();
+      } catch (PHPTesterException $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (TypeError $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (ParseError $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (DivisionByZeroError $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (AssertionError $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (ArithmeticError $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (Error $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (ErrorException $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      } catch (Exception $e) {
+        $error_thrown = true;
+        echo "Expected error thrown: $e<br />";
+      }
+      $this->expect($error_thrown, $msg);
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
