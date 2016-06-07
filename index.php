@@ -1,4 +1,10 @@
 <?php
+
+/*
+  PHPTester Usage Demo
+  For the actual testing framework, please refer to `class.phptester.php`
+*/
+
 require 'class.phptester.php';
 $test = new PHPTester;
 $test->describe("PHPTester", function () {

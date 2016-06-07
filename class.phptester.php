@@ -1,4 +1,13 @@
 <?php
+
+/*
+  PHPTester
+  v3.0.0-dev
+  A custom PHP TDD framework
+  (c) Donald Leung.  All rights reserved.
+  MIT Licensed
+*/
+
 try {
   interface PHPTesterInterface {
     /* Spec Methods */
