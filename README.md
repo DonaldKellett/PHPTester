@@ -124,3 +124,21 @@ PHPTester::assert_not_similar($actual, $unexpected[, $msg[, $success]]);
 ```
 
 Basically the opposite of `assert_similar` - passes the test if the two arrays are **not** similar in structure and values and fails otherwise.
+
+#### Errors
+
+##### expect_error
+
+```php
+PHPTester::expect_error($msg, $fn);
+```
+
+`PHPTester::expect_error` expects exactly 2 arguments, the first one being the message displayed upon failure (`$msg`) and the second one being the anonymous function `$fn` to be executed.  The test is passed if an error is thrown within the anonymous function and fails otherwise.
+
+##### expect_no_error
+
+```php
+PHPTester::expect_no_error($msg, $fn);
+```
+
+Basically the opposite of `expect_error` - the test is passed if no error is thrown in the anonymous function and fails otherwise.
