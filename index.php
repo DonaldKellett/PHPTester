@@ -122,5 +122,39 @@ $test->describe("PHPTester", function () {
     # Error
     $test->assert_not_equals(M_PI, array(1, 2, 3, 4, 5));
   });
+  $test->it("should have a working assert_fuzzy_equals method", function () {
+    global $test;
+
+    # Passing Tests with Default Message
+    $test->assert_fuzzy_equals(3.14159495, M_PI);
+    $test->assert_fuzzy_equals(2.718284969, M_E);
+    $test->assert_fuzzy_equals(3, M_PI, 0);
+    $test->assert_fuzzy_equals(3, M_E, 0);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0);
+
+    # Passing Tests with Custom Message
+    $test->assert_fuzzy_equals(3.14159495, M_PI, 5, "", "Your value was within the accepted range");
+    $test->assert_fuzzy_equals(2.718284969, M_E, 5, "", "Your value was within the accepted range");
+    $test->assert_fuzzy_equals(3, M_PI, 0, "", "Your value was within the accepted range");
+    $test->assert_fuzzy_equals(3, M_E, 0, "", "Your value was within the accepted range");
+    $test->assert_fuzzy_equals(M_PI, M_E, 0, "", "Your value was within the accepted range");
+
+    # Failing Tests with Default Message
+    $test->assert_fuzzy_equals(2.718289, M_E);
+    $test->assert_fuzzy_equals(3.141598, M_PI);
+    $test->assert_fuzzy_equals(3, M_PI, 1);
+    $test->assert_fuzzy_equals(3, M_E, 1);
+    $test->assert_fuzzy_equals(M_PI, M_E, 1);
+
+    # Failing Tests with Custom Message
+    $test->assert_fuzzy_equals(2.718289, M_E, 5, "Your value was not within the accepted range");
+    $test->assert_fuzzy_equals(3.141598, M_PI, 5, "Your value was not within the accepted range");
+    $test->assert_fuzzy_equals(3, M_PI, 1, "Your value was not within the accepted range");
+    $test->assert_fuzzy_equals(3, M_E, 1, "Your value was not within the accepted range");
+    $test->assert_fuzzy_equals(M_PI, M_E, 1, "Your value was not within the accepted range");
+
+    # Error
+    $test->assert_fuzzy_equals(3, 3, 3.0);
+  });
 });
 ?>
