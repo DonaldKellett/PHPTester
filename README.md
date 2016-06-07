@@ -104,3 +104,23 @@ PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $precision = 5[, $msg[
 ```
 
 Basically the opposite of `PHPTester::assert_fuzzy_equals` - the test passes if both values do not round to the same number and fails otherwise.
+
+#### Arrays
+
+##### assert_similar
+
+```php
+PHPTester::assert_similar($actual, $expected[, $msg[, $success]]);
+```
+
+Compares two arrays, `$actual` and `$expected` to see if they have the same structure with the same values.  Passes the test if this is true and fails otherwise.  This method also works for primitives (and would behave like `assert_equals`).  `$msg` and `$success` are optional.
+
+Currently (`v3.0.0`), direct PHP object comparison is **not** supported by `PHPTester::assert_similar` and will throw an error if you attempt to do so.  However, in the near future, it is planned for `PHPTester::assert_similar` (and related methods) to support direct object comparison.
+
+##### assert_not_similar
+
+```php
+PHPTester::assert_not_similar($actual, $unexpected[, $msg[, $success]]);
+```
+
+Basically the opposite of `assert_similar` - passes the test if the two arrays are **not** similar in structure and values and fails otherwise.
