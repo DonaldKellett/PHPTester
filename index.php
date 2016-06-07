@@ -54,5 +54,39 @@ $test->describe("PHPTester", function () {
     }
     echo $test->display(new Cat) . "<br />";
   });
+  $test->it("should have a working assert_equals method", function () {
+    global $test;
+
+    # Passing Tests with Default Message
+    $test->assert_equals(1, 1);
+    $test->assert_equals(0, 0);
+    $test->assert_equals(true, true);
+    $test->assert_equals(false, false);
+    $test->assert_equals("Hello World", "Hello World");
+
+    # Passing Tests with Custom Message
+    $test->assert_equals(1, 1, "", "Well done, you passed the test");
+    $test->assert_equals(0, 0, "", "Well done, you passed the test");
+    $test->assert_equals(true, true, "", "Well done, you passed the test");
+    $test->assert_equals(false, false, "", "Well done, you passed the test");
+    $test->assert_equals("Hello World", "Hello World", "", "Well done, you passed the test");
+
+    # Failing Tests with Default Message
+    $test->assert_equals(1, true);
+    $test->assert_equals(0, false);
+    $test->assert_equals(true, false);
+    $test->assert_equals(0, 1);
+    $test->assert_equals("Goodbye World", "Hello World");
+
+    # Failing Tests with Custom Message
+    $test->assert_equals(1, true, "Bad luck, you failed the test");
+    $test->assert_equals(0, false, "Bad luck, you failed the test");
+    $test->assert_equals(true, false, "Bad luck, you failed the test");
+    $test->assert_equals(0, 1, "Bad luck, you failed the test");
+    $test->assert_equals("Goodbye World", "Hello World", "Bad luck, you failed the test");
+
+    # Error
+    $test->assert_equals(array(3, 4, 5, 10, 12), 34);
+  });
 });
 ?>
