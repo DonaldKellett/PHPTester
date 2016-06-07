@@ -88,5 +88,39 @@ $test->describe("PHPTester", function () {
     # Error
     $test->assert_equals(array(3, 4, 5, 10, 12), 34);
   });
+  $test->it("should have a working assert_not_equals method", function () {
+    global $test;
+
+    # Passing Tests with Default Message
+    $test->assert_not_equals(1, true);
+    $test->assert_not_equals(0, false);
+    $test->assert_not_equals(M_PI, M_E);
+    $test->assert_not_equals(3, M_PI);
+    $test->assert_not_equals("Goodbye World", "Hello World");
+
+    # Passing Tests with Custom Message
+    $test->assert_not_equals(1, true, "", "Hooray, you passed");
+    $test->assert_not_equals(0, false, "", "Hooray, you passed");
+    $test->assert_not_equals(M_PI, M_E, "", "Hooray, you passed");
+    $test->assert_not_equals(3, M_PI, "", "Hooray, you passed");
+    $test->assert_not_equals("Goodbye World", "Hello World", "", "Hooray, you passed");
+
+    # Failing Tests with Default Message
+    $test->assert_not_equals(1, 1);
+    $test->assert_not_equals(0, 0);
+    $test->assert_not_equals(true, true);
+    $test->assert_not_equals(false, false);
+    $test->assert_not_equals("Hello World", "Hello World");
+
+    # Failing Tests with Custom Message
+    $test->assert_not_equals(1, 1, "Test did not pass");
+    $test->assert_not_equals(0, 0, "Test did not pass");
+    $test->assert_not_equals(true, true, "Test did not pass");
+    $test->assert_not_equals(false, false, "Test did not pass");
+    $test->assert_not_equals("Hello World", "Hello World", "Test did not pass");
+
+    # Error
+    $test->assert_not_equals(M_PI, array(1, 2, 3, 4, 5));
+  });
 });
 ?>

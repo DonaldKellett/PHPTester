@@ -19,7 +19,7 @@ try {
 
     // Primitives
     public function assert_equals($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
-    # public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
 
     // Errors
     # public function expect_error($msg, $fn);
@@ -163,6 +163,10 @@ try {
     public function assert_equals($actual, $expected, $msg = "Actual value did not match expected", $success = "Test Passed") {
       if ((!is_int($actual) && !is_float($actual) && !is_bool($actual) && !is_string($actual) && !is_null($actual)) || (!is_int($expected) && !is_float($expected) && !is_bool($expected) && !is_string($expected) && !is_null($expected))) throw new TypeError("In PHPTester::assert_equals, both the actual and expected values must be primitives!");
       $this->expect($actual === $expected, "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
+    }
+    public function assert_not_equals($actual, $unexpected, $msg = "Unexpected value returned", $success = "Test Passed") {
+      if ((!is_int($actual) && !is_float($actual) && !is_bool($actual) && !is_string($actual) && !is_null($actual)) || (!is_int($unexpected) && !is_float($unexpected) && !is_bool($unexpected) && !is_string($unexpected) && !is_null($unexpected))) throw new TypeError("In PHPTester::assert_not_equals, both the actual and expected values must be primitives!");
+      $this->expect($actual !== $unexpected, "$msg - Expected value to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
