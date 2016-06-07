@@ -237,6 +237,16 @@ try {
       }
       $this->expect(!$error_thrown, "$msg: $e");
     }
+    protected function check_similar($actual, $expected) {
+      if (is_null($actual) || is_null($expected) || is_bool($actual) || is_bool($expected) || is_string($actual) || is_string($expected) || is_int($actual) || is_int($expected) || is_float($actual) || is_float($expected)) return $actual === $expected;
+      foreach ($actual as $key => $value) {
+        if (!$this->check_similar($actual[$key], $expected[$key])) return false;
+      }
+      foreach ($expected as $key => $value) {
+        if (!$this->check_similar($actual[$key], $expected[$key])) return false;
+      }
+      return true;
+    }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
       if ($min >= $max) throw new TypeError("In PHPTester::random_number, \$min must be smaller than \$max");

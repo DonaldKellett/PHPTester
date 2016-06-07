@@ -228,5 +228,142 @@ $test->describe("PHPTester", function () {
       throw new ErrorException;
     });
   });
+  $test->it("should have a functioning (protected) check_similar method", function () {
+    global $test;
+    $test->expect($test->check_similar(NULL, NULL));
+    $test->expect($test->check_similar(1, 1));
+    $test->expect($test->check_similar(0, 0));
+    $test->expect($test->check_similar(true, true));
+    $test->expect($test->check_similar(false, false));
+    $test->expect($test->check_similar(M_PI, M_PI));
+    $test->expect($test->check_similar(M_E, M_E));
+    $test->expect($test->check_similar("Hello World", "Hello World"));
+    $test->expect($test->check_similar("HELLO WORLD", "HELLO WORLD"));
+    $test->expect($test->check_similar(array(2, 4, 6, 8, 10, 12, 14, 16, 18, 20), array(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)));
+    $test->expect($test->check_similar(array("Hello" => "World", "Goodbye" => "World", "bacon" => "necessity"), array("Hello" => "World", "Goodbye" => "World", "bacon" => "necessity")));
+    $test->expect($test->check_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    )));
+    $test->expect(!$test->check_similar(NULL, false));
+    $test->expect(!$test->check_similar(false, NULL));
+    $test->expect(!$test->check_similar(true, 1));
+    $test->expect(!$test->check_similar(1, true));
+    $test->expect(!$test->check_similar(1, 0));
+    $test->expect(!$test->check_similar(0, 1));
+    $test->expect(!$test->check_similar(0, NULL));
+    $test->expect(!$test->check_similar(NULL, 0));
+    $test->expect(!$test->check_similar(M_PI, M_E));
+    $test->expect(!$test->check_similar(M_E, M_PI));
+    $test->expect(!$test->check_similar("Hello World", "HELLO WORLD"));
+    $test->expect(!$test->check_similar("HELLO WORLD", "Hello World"));
+    $test->expect(!$test->check_similar(array(2, 4, 6, 8, 10, 12), array(2, 4, 6, 8, 10)));
+    $test->expect(!$test->check_similar(array(2, 4, 6, 8, 10), array(2, 4, 6, 8, 10, 12)));
+    $test->expect(!$test->check_similar(array(4, 2, 8, 10, 6), array(2, 4, 6, 8, 10)));
+    $test->expect(!$test->check_similar(array(2, 4, 6, 8, 10), array(4, 2, 8, 10, 6)));
+    $test->expect(!$test->check_similar(array(array()), array()));
+    $test->expect(!$test->check_similar(array(), array(array())));
+    $test->expect(!$test->check_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array("course"))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    )));
+    $test->expect(!$test->check_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array("course"))))),
+        "bacon" => "Most delicious of all"
+      )
+    )));
+    $test->expect(!$test->check_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, false, NULL, "Hello World", true, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    )));
+    $test->expect(!$test->check_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, false, NULL, "Hello World", true, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    )));
+  });
 });
 ?>
