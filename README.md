@@ -46,7 +46,41 @@ PHPTester::describe($msg, $fn);
 #### it
 
 ```php
-PHPTester::it($msg, $fn)
+PHPTester::it($msg, $fn);
 ```
 
 `PHPTester::it` is another spec method used to define, group and format a subset of test cases within a `describe` context.  Like `PHPTester::describe`, it expects exactly two arguments, `$msg` (a string message that describes the subset of test cases being executed) and `$fn` (the code to be executed).  It handles errors properly, allowing the rest of the test cases in the `describe` context to be executed even if an error is thrown in an individual `it` context.  Note that although it is not compulsory to use `it` contexts while testing, it is **highly recommended** for you to do so (although not so much as the `describe` context) as it makes the test output even more readable.
+
+### Pass/Fail Methods
+
+#### Core
+
+##### expect
+
+```php
+PHPTester::expect($passed[, $msg[, $success]]);
+```
+
+`PHPTester::expect` is the core assertion method used in `PHPTester` in which all other assertion (pass/fail) methods build on.  It expects one argument, `$passed`, which should ideally be a boolean (`true`/`false`) but can also be any other value.  The test is passed if the value provided (`$passed`) is truthy (anything other than `false`, `NULL`, `0` and an empty string `""`) and fails otherwise.
+
+The `$msg` (failing message) and `$success` (message upon success) arguments are optional. **However, it is considered good practice to provide a custom `$msg` (failing message) as the default failing message is very generic and provides no useful feedback as to what has failed.**
+
+#### Primitives
+
+##### assert_equals
+
+```php
+PHPTester::assert_equals($actual, $expected[, $msg[, $success]]);
+```
+
+`PHPTester::assert_equals` is a pass/fail method used to compare two **primitive data types** (i.e. booleans, strings, integers, floats and `NULL`) and check if they are of the same value.  The test is passed if `$actual === $expected` and fails otherwise.  The `$msg` and `$success` parameters are optional but it is a good practice to provide a custom failing message (`$msg`).
+
+`PHPTester::assert_equals` (and all other "Primitive" assertion methods) will throw an error if either of `$actual` or `$expected` is an array or object (i.e. not a primitive).
+
+##### assert_not_equals
+
+```php
+PHPTester::assert_not_equals($actual, $unexpected[, $msg[, $success]]);
+```
+
+Basically the opposite of `PHPTester::assert_equals` - the test is passed if `$actual !== $unexpected` and fails otherwise.  Throws an error if either of `$actual` or `$unexpected` is not a primitive value.
