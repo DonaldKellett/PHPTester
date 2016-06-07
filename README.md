@@ -4,8 +4,8 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
 
-- Version Number: `v3.0.0-dev`
-- Status: Ready for production but awaiting documentation
+- Version Number: `v3.0.0`
+- Status: Stable - Production Ready
 - License: **MIT License**
 
 ## A note regarding version number
@@ -142,3 +142,63 @@ PHPTester::expect_no_error($msg, $fn);
 ```
 
 Basically the opposite of `expect_error` - the test is passed if no error is thrown in the anonymous function and fails otherwise.
+
+### Random Output Methods
+
+#### random_number
+
+```php
+PHPTester::random_number([$min = 0, $max = 100]);
+```
+
+Returns a random integer from `0` to `100` inclusive if `$min` and `$max` are not specified.  `$min` must be smaller than `$max` and both must be integers if provided.
+
+#### random_token
+
+```php
+PHPTester::random_token([$length = 10]);
+```
+
+Returns a random string of length `$length` (defaults to `10` if not specified) containing only lowercase letters and/or digits.
+
+#### randomize
+
+```php
+PHPTester::randomize($array);
+```
+
+Expects an array (that **cannot** be associative at the top level) as argument and returns a new array with the order of the elements randomized.  Does not mutate the original array.
+
+## A Simple Example
+
+```php
+# Require class.phptester.php to start using PHPTester
+require '/path/to/your/class.phptester.php';
+
+# Create a new instance of PHPTester
+$test = new PHPTester;
+
+# Program your algorithm to be tested
+function multiply($a, $b) {
+  return $a * $b;
+}
+
+# Write your test cases (should ideally be written BEFORE you program your algorithm)
+$test->describe("The Multiply Function", function () {
+  global $test;
+  $test->it("should work for some positive integers", function () {
+    global $test;
+    $test->assert_equals(multiply(1, 1), 1);
+    $test->assert_equals(multiply(2, 4), 8);
+    $test->assert_equals(multiply(3, 5), 15);
+    $test->assert_equals(multiply(5, 3), 15);
+  });
+  $test->it("should also work for negative integers", function () {
+    global $test;
+    $test->assert_equals(multiply(-5, 3), -15);
+    $test->assert_equals(multiply(6, -7), -42);
+    $test->assert_equals(multiply(-8, -10), 80);
+    $test->assert_equals(multiply(-2, -4), 8);
+  });
+});
+```
