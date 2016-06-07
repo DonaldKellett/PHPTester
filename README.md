@@ -84,3 +84,23 @@ PHPTester::assert_not_equals($actual, $unexpected[, $msg[, $success]]);
 ```
 
 Basically the opposite of `PHPTester::assert_equals` - the test is passed if `$actual !== $unexpected` and fails otherwise.  Throws an error if either of `$actual` or `$unexpected` is not a primitive value.
+
+#### Numbers
+
+##### assert_fuzzy_equals
+
+```php
+PHPTester::assert_fuzzy_equals($actual, $expected[, $precision = 5[, $msg[, $success]]]);
+```
+
+Compares two numbers, `$actual` and `$expected` to see if they round to the same number up to a certain `$precision` (in decimal places).  The test is passed if both numbers round to the same value and fails otherwise.  `$precision` is optional and defaults to `5` (decimal places) if not provided.  Again, `$msg` and `$success` are optional.
+
+An error is thrown if either of the two values provided is not a number.
+
+##### assert_not_fuzzy_equals
+
+```php
+PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $precision = 5[, $msg[, $success]]]);
+```
+
+Basically the opposite of `PHPTester::assert_fuzzy_equals` - the test passes if both values do not round to the same number and fails otherwise.
