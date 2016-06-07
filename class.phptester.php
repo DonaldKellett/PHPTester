@@ -31,7 +31,7 @@ try {
 
     // Numbers
     public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
-    # public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
   }
   class PHPTesterException extends Exception {
     public function __construct($message, $code = 0, Exception $previous = null) {
@@ -172,6 +172,11 @@ try {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($expected) && !is_float($expected))) throw new TypeError("In PHPTester::assert_fuzzy_equals, both the actual and expected values must be valid numbers!");
       if (!is_int($precision)) throw new TypeError("In PHPTester::assert_fuzzy_equals, \$precision must be a valid integer!");
       $this->expect(round($actual, $precision) === round($expected, $precision), "$msg - Expected: " . $this->display(round($expected, $precision)) . ", but instead got: " . $this->display(round($actual, $precision)), "$success - Value === " . $this->display(round($expected, $precision)));
+    }
+    public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Unexpected value returned", $success = "Test Passed") {
+      if ((!is_int($actual) && !is_float($actual)) || (!is_int($unexpected) && !is_float($unexpected))) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, both the actual and unexpected values must be valid numbers!");
+      if (!is_int($precision)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$precision must be a valid integer!");
+      $this->expect(round($actual, $precision) !== round($unexpected, $precision), "$msg - Rounded value was expected to not equal: " . $this->display(round($unexpected, $precision)), "$success - Value !== " . $this->display(round($unexpected, $precision)));
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");
