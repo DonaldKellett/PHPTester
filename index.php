@@ -365,5 +365,62 @@ $test->describe("PHPTester", function () {
       )
     )));
   });
+  $test->it("should have working assert_similar and assert_not_similar methods", function () {
+    global $test;
+
+    # assert_similar (Passing Tests with Default Message Only)
+    $test->assert_similar(array(), array());
+    $test->assert_similar(array(2, 4, 6, 8, 10), array(2, 4, 6, 8, 10));
+    $test->assert_similar(array("Hello" => "World", "bacon" => "delicious"), array("Hello" => "World", "bacon" => "delicious"));
+    $test->assert_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array("Hello World"))))));
+    $test->assert_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ));
+
+    # assert_not_similar (Failing Tests with Default Message Only)
+    $test->assert_not_similar(array(), array());
+    $test->assert_not_similar(array(2, 4, 6, 8, 10), array(2, 4, 6, 8, 10));
+    $test->assert_not_similar(array("Hello" => "World", "bacon" => "delicious"), array("Hello" => "World", "bacon" => "delicious"));
+    $test->assert_not_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array("Hello World"))))));
+    $test->assert_not_similar(array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ), array(
+      "Hello" => "World",
+      "bacon" => "delicious",
+      "array" => array(1, 2, 3, 4, 5),
+      "nested array" => array("Hello" => "World", "bacon", "is", "not" => array("Just", "kidding", "!") , "delicious"),
+      "complex nested array" => array(
+        "ice cream" => array("quite" => array(4, true, NULL, "Hello World", false, M_PI, "bacon", M_E), "delicious"),
+        "curry" => array("Even" => "better", "of" => array(array(array(array(array("course")))))),
+        "bacon" => "Most delicious of all"
+      )
+    ));
+  });
 });
 ?>

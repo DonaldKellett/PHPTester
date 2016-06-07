@@ -1,8 +1,6 @@
 <?php
 try {
   interface PHPTesterInterface {
-    /* TODO: Uncomment all methods and implement all of them properly by v3.0.0 release */
-
     /* Spec Methods */
     public function describe($msg, $fn);
     public function it($msg, $fn);
@@ -13,22 +11,17 @@ try {
     public function randomize($array);
 
     /* Pass/Fail Methods */
-
     // Core
     public function expect($passed, $msg = "Default Message", $success = "Default Success Message");
-
     // Primitives
     public function assert_equals($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
     public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
-
     // Errors
     public function expect_error($msg, $fn);
     public function expect_no_error($msg, $fn);
-
     // Arrays (and primitives)
-    # public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
-    # public function assert_not_similar($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
-
+    public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_not_similar($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
     // Numbers
     public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
     public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
@@ -177,6 +170,12 @@ try {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($unexpected) && !is_float($unexpected))) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, both the actual and unexpected values must be valid numbers!");
       if (!is_int($precision)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$precision must be a valid integer!");
       $this->expect(round($actual, $precision) !== round($unexpected, $precision), "$msg - Rounded value was expected to not equal: " . $this->display(round($unexpected, $precision)), "$success - Value !== " . $this->display(round($unexpected, $precision)));
+    }
+    public function assert_similar($actual, $expected, $msg = "Actual value did not match expected", $success = "Test Passed") {
+      $this->expect($this->check_similar($actual, $expected), "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
+    }
+    public function assert_not_similar($actual, $unexpected, $msg = "Unexpected value returned", $success = "Test Passed") {
+      $this->expect(!$this->check_similar($actual, $unexpected), "$msg - Expected value to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
     }
     public function expect_error($msg, $fn) {
       $error_thrown = !1;
