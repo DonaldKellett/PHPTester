@@ -23,7 +23,7 @@ try {
 
     // Errors
     public function expect_error($msg, $fn);
-    # public function expect_no_error($msg, $fn);
+    public function expect_no_error($msg, $fn);
 
     // Arrays (and primitives)
     # public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
@@ -211,6 +211,31 @@ try {
         echo "Expected error thrown: $e<br />";
       }
       $this->expect($error_thrown, $msg);
+    }
+    public function expect_no_error($msg, $fn) {
+      $error_thrown = !1;
+      try {
+        $fn();
+      } catch (PHPTesterException $e) {
+        $error_thrown = true;
+      } catch (TypeError $e) {
+        $error_thrown = true;
+      } catch (ParseError $e) {
+        $error_thrown = true;
+      } catch (DivisionByZeroError $e) {
+        $error_thrown = true;
+      } catch (AssertionError $e) {
+        $error_thrown = true;
+      } catch (ArithmeticError $e) {
+        $error_thrown = true;
+      } catch (Error $e) {
+        $error_thrown = true;
+      } catch (ErrorException $e) {
+        $error_thrown = true;
+      } catch (Exception $e) {
+        $error_thrown = true;
+      }
+      $this->expect(!$error_thrown, "$msg: $e");
     }
     public function random_number($min = 0, $max = 100) {
       if (!is_int($min) || !is_int($max)) throw new TypeError("In PHPTester::random_number, \$min and \$max must both be integers");

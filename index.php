@@ -209,5 +209,24 @@ $test->describe("PHPTester", function () {
       echo new ErrorException . "<br />";
     });
   });
+  $test->it("should have a working expect_no_error method", function () {
+    global $test;
+
+    # Passing Tests
+    $test->expect_no_error("Error should not be thrown", function () {
+      echo new PHPTesterException("This should pass the test") . "<br />";
+    });
+    $test->expect_no_error("Error should not be thrown", function () {
+      echo new ErrorException . "<br />";
+    });
+
+    # Failing Tests
+    $test->expect_no_error("An exception should not be thrown", function () {
+      throw new PHPTesterException("Now this should fail the test");
+    });
+    $test->expect_no_error("An ErrorException should not be thrown", function () {
+      throw new ErrorException;
+    });
+  });
 });
 ?>
