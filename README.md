@@ -41,4 +41,12 @@ The PHP code in `class.phptester.php` consists of three main parts:
 PHPTester::describe($msg, $fn);
 ```
 
-`PHPTester::describe` expects exactly 2 arguments, the first one being the description of the group of tests (`$msg`) which should be a string and the second one being the function in which the group of tests are to be executed.  Please note that although it is not compulsory to use `PHPTester::describe`, it is **highly recommended** that you do so as it provides valuable information regarding the number of passes/fails and the execution time.  It also handles any errors being executed inside the anonymous function (`$fn`) properly, allowing the rest of your PHP script to be executed as normal even if an error is thrown.
+`PHPTester::describe` is the top-level spec method used to group a set of test cases.  It expects exactly 2 arguments, the first one being the description of the group of tests (`$msg`) which should be a string and the second one being the function in which the group of tests are to be executed.  Please note that although it is not compulsory to use `PHPTester::describe`, it is **highly recommended** that you do so as it provides valuable information regarding the number of passes/fails and the execution time.  It also handles any errors thrown inside the anonymous function (`$fn`) properly, allowing the rest of your PHP script to be executed as normal even if an error is thrown.
+
+#### it
+
+```php
+PHPTester::it($msg, $fn)
+```
+
+`PHPTester::it` is another spec method used to define, group and format a subset of test cases within a `describe` context.  Like `PHPTester::describe`, it expects exactly two arguments, `$msg` (a string message that describes the subset of test cases being executed) and `$fn` (the code to be executed).  It handles errors properly, allowing the rest of the test cases in the `describe` context to be executed even if an error is thrown in an individual `it` context.  Note that although it is not compulsory to use `it` contexts while testing, it is **highly recommended** for you to do so (although not so much as the `describe` context) as it makes the test output even more readable.
