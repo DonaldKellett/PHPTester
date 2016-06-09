@@ -1,5 +1,7 @@
 # PHPTester
 
+[![Join the chat at https://gitter.im/DonaldKellett/PHPTester](https://badges.gitter.im/DonaldKellett/PHPTester.svg)](https://gitter.im/DonaldKellett/PHPTester?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
