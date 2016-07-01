@@ -6,7 +6,7 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
 
-- Version Number: `v3.0.2`
+- Version Number: `v3.0.3`
 - Status: Stable - Production Ready
 - License: **MIT License**
 
@@ -188,6 +188,16 @@ PHPTester::randomize($array);
 ```
 
 Expects an array (that **cannot** be associative at the top level) as argument and returns a new array with the order of the elements randomized.  Does not mutate the original array.
+
+### Miscellaneous
+
+#### get_execution_time (`v3.0.3`+)
+
+```php
+PHPTester::get_execution_time($fn);
+```
+
+Executes a function `$fn` (the only argument passed in) and returns the execution time of the block of code in **milliseconds** to the nearest millisecond.
 
 ## A Simple Example
 
