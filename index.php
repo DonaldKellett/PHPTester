@@ -459,7 +459,28 @@ $test->describe("PHPTester", function () {
       for ($i = 0; $i < 1000000; $i++) {
         $s .= "Hello World<br />";
       }
-    }, 200);
+    }, 1000);
+    $test->assert_max_execution_time(function () {
+      $s = "";
+      for ($i = 0; $i < 1000000; $i++) {
+        $s .= "Hello World<br />";
+      }
+    }, 10);
+  });
+  $test->it("should have a working assert_min_execution_time", function () {
+    global $test;
+    $test->assert_min_execution_time(function () {
+      $s = "";
+      for ($i = 0; $i < 1000000; $i++) {
+        $s .= "Hello World<br />";
+      }
+    }, 10);
+    $test->assert_min_execution_time(function () {
+      $s = "";
+      for ($i = 0; $i < 1000000; $i++) {
+        $s .= "Hello World<br />";
+      }
+    }, 1000);
   });
 });
 ?>

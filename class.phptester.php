@@ -192,7 +192,13 @@ try {
       $this->expect($dur <= $ms, "$msg - Expected program to complete within " . $ms . "ms but program took " . $dur . "ms to complete", "$success - Program took " . $dur . "ms to complete (max allowed: " . $ms . "ms)");
     }
     public function assert_min_execution_time($fn, $ms, $msg = "Execution duration too short", $success = "Test Passed") {
-
+      if (!is_int($ms) && !is_float($ms)) throw new TypeError("In PHPTester::assert_min_execution_time, \$ms must be a valid number!");
+      if (!is_int($ms)) throw new TypeError("In PHPTester::assert_min_execution_time, \$ms cannot be a float!");
+      if ($ms < 0) throw new TypeError("IN PHPTester::assert_min_execution_time, \$ms cannot be negative!");
+      $start = microtime(true);
+      $fn();
+      $dur = round((microtime(true) - $start) * 1000);
+      $this->expect($dur >= $ms, "$msg - Expected program to take over " . $ms . "ms to complete but program only took " . $dur . "ms to complete", "$success - Program took " . $dur . "ms to complete (Expected execution time to exceed: " . $ms . "ms)");
     }
     protected function check_similar($actual, $expected) {
       if (is_null($actual) || is_null($expected) || is_bool($actual) || is_bool($expected) || is_string($actual) || is_string($expected) || is_int($actual) || is_int($expected) || is_float($actual) || is_float($expected)) return $actual === $expected;
