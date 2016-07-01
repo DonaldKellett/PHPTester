@@ -37,6 +37,9 @@ try {
     // Performance
     public function assert_max_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
     public function assert_min_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
+
+    /* Miscellaneous */
+    public function get_execution_time($fn);
   }
   class PHPTesterException extends Exception {
     public function __construct($message, $code = 0, Exception $previous = null) {
@@ -235,6 +238,11 @@ try {
         list($array[$a], $array[$b]) = array($array[$b], $array[$a]);
       }
       return $array;
+    }
+    public function get_execution_time($fn) {
+      $start = microtime(true);
+      $fn();
+      return round((microtime(true) - $start) * 1000);
     }
   }
 } catch (Error $e) {
