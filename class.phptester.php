@@ -32,8 +32,8 @@ try {
     public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
     public function assert_not_similar($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
     // Numbers
-    public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
-    public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_fuzzy_equals($actual, $expected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_not_fuzzy_equals($actual, $unexpected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
     // Performance
     public function assert_max_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
     public function assert_min_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
@@ -140,15 +140,15 @@ try {
       if ((!is_int($actual) && !is_float($actual) && !is_bool($actual) && !is_string($actual) && !is_null($actual)) || (!is_int($unexpected) && !is_float($unexpected) && !is_bool($unexpected) && !is_string($unexpected) && !is_null($unexpected))) throw new TypeError("In PHPTester::assert_not_equals, both the actual and expected values must be primitives!");
       $this->expect($actual !== $unexpected, "$msg - Expected value to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
     }
-    public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Actual value did not match expected", $success = "Test Passed") {
+    public function assert_fuzzy_equals($actual, $expected, $range = 1e-12, $msg = "Actual value did not match expected", $success = "Test Passed") {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($expected) && !is_float($expected))) throw new TypeError("In PHPTester::assert_fuzzy_equals, both the actual and expected values must be valid numbers!");
-      if (!is_int($precision)) throw new TypeError("In PHPTester::assert_fuzzy_equals, \$precision must be a valid integer!");
-      $this->expect(round($actual, $precision) === round($expected, $precision), "$msg - Expected: " . $this->display(round($expected, $precision)) . ", but instead got: " . $this->display(round($actual, $precision)), "$success - Value === " . $this->display(round($expected, $precision)));
+      if (!is_float($range)) throw new TypeError("In PHPTester::assert_fuzzy_equals, \$range must be a valid number!");
+      $this->expect(abs($expected - $actual) <= $range, "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
     }
-    public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Unexpected value returned", $success = "Test Passed") {
+    public function assert_not_fuzzy_equals($actual, $unexpected, $range = 1e-12, $msg = "Unexpected value returned", $success = "Test Passed") {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($unexpected) && !is_float($unexpected))) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, both the actual and unexpected values must be valid numbers!");
-      if (!is_int($precision)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$precision must be a valid integer!");
-      $this->expect(round($actual, $precision) !== round($unexpected, $precision), "$msg - Rounded value was expected to not equal: " . $this->display(round($unexpected, $precision)), "$success - Value !== " . $this->display(round($unexpected, $precision)));
+      if (!is_float($range)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$range must be a valid number!");
+      $this->expect(abs($unexpected - $actual) >= $range, "$msg - Value was expected to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
     }
     public function assert_similar($actual, $expected, $msg = "Actual value did not match expected", $success = "Test Passed") {
       $this->expect($this->check_similar($actual, $expected), "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));

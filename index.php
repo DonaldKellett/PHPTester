@@ -128,7 +128,7 @@ $test->describe("PHPTester", function () {
     # Error
     $test->assert_not_equals(M_PI, array(1, 2, 3, 4, 5));
   });
-  $test->it("should have a working assert_fuzzy_equals method", function () {
+  /* $test->it("should have a working assert_fuzzy_equals method", function () {
     global $test;
 
     # Passing Tests with Default Message
@@ -195,7 +195,7 @@ $test->describe("PHPTester", function () {
 
     # Error
     $test->assert_not_fuzzy_equals(M_PI, "Hello World");
-  });
+  }); */
   $test->it("should have a working expect_error method", function () {
     global $test;
 
@@ -492,6 +492,112 @@ $test->describe("PHPTester", function () {
         }
       }) . "<br />";
     }
+  });
+  $test->it("should have a working assert_fuzzy_equals", function () {
+    global $test;
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.1);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.2);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.3);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.4);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.5);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.6);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.7);
+    $test->assert_fuzzy_equals(M_E, M_PI, 0.8);
+
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.1);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.2);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.3);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.4);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.5);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.6);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.7);
+    $test->assert_fuzzy_equals(M_PI, M_E, 0.8);
+
+
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-8);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-7);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-6);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-5);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-4);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-3);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-2);
+    $test->assert_fuzzy_equals(3, 3.00001, 1e-1);
+
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-1);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-2);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-3);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-4);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-5);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-6);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-7);
+    $test->assert_fuzzy_equals(3.00001, 3, 1e-8);
+
+    $test->assert_fuzzy_equals(3, 3 + 1e-15);
+    $test->assert_fuzzy_equals(3, 3 + 1e-14);
+    $test->assert_fuzzy_equals(3, 3 + 1e-13);
+    $test->assert_fuzzy_equals(3, 3 + 1e-12);
+    $test->assert_fuzzy_equals(3, 3 + 1e-11);
+    $test->assert_fuzzy_equals(3, 3 + 1e-10);
+
+    $test->assert_fuzzy_equals(3 + 1e-15, 3);
+    $test->assert_fuzzy_equals(3 + 1e-14, 3);
+    $test->assert_fuzzy_equals(3 + 1e-13, 3);
+    $test->assert_fuzzy_equals(3 + 1e-12, 3);
+    $test->assert_fuzzy_equals(3 + 1e-11, 3);
+    $test->assert_fuzzy_equals(3 + 1e-10, 3);
+  });
+  $test->it("should have a working assert_not_fuzzy_equals method", function () {
+    global $test;
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.1);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.2);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.3);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.4);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.5);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.6);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.7);
+    $test->assert_not_fuzzy_equals(M_E, M_PI, 0.8);
+
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.1);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.2);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.3);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.4);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.5);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.6);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.7);
+    $test->assert_not_fuzzy_equals(M_PI, M_E, 0.8);
+
+
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-8);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-7);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-6);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-5);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-4);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-3);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-2);
+    $test->assert_not_fuzzy_equals(3, 3.00001, 1e-1);
+
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-1);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-2);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-3);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-4);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-5);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-6);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-7);
+    $test->assert_not_fuzzy_equals(3.00001, 3, 1e-8);
+
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-15);
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-14);
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-13);
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-12);
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-11);
+    $test->assert_not_fuzzy_equals(3, 3 + 1e-10);
+
+    $test->assert_not_fuzzy_equals(3 + 1e-15, 3);
+    $test->assert_not_fuzzy_equals(3 + 1e-14, 3);
+    $test->assert_not_fuzzy_equals(3 + 1e-13, 3);
+    $test->assert_not_fuzzy_equals(3 + 1e-12, 3);
+    $test->assert_not_fuzzy_equals(3 + 1e-11, 3);
+    $test->assert_not_fuzzy_equals(3 + 1e-10, 3);
   });
 });
 ?>
