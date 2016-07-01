@@ -62,24 +62,6 @@ try {
       $start = microtime(true);
       try {
         $fn();
-      } catch (PHPTesterException $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (TypeError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (ParseError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (DivisionByZeroError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (AssertionError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (ArithmeticError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
       } catch (Error $e) {
         $this->errors++;
         echo "<span style='color:red'>$e</span><br />";
@@ -110,24 +92,6 @@ try {
       echo "<div style='margin-left:30px'>";
       try {
         $fn();
-      } catch (PHPTesterException $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (TypeError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (ParseError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (DivisionByZeroError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (AssertionError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
-      } catch (ArithmeticError $e) {
-        $this->errors++;
-        echo "<span style='color:red'>$e</span><br />";
       } catch (Error $e) {
         $this->errors++;
         echo "<span style='color:red'>$e</span><br />";
@@ -190,24 +154,6 @@ try {
       $error_thrown = !1;
       try {
         $fn();
-      } catch (PHPTesterException $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
-      } catch (TypeError $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
-      } catch (ParseError $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
-      } catch (DivisionByZeroError $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
-      } catch (AssertionError $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
-      } catch (ArithmeticError $e) {
-        $error_thrown = true;
-        echo "Expected error thrown: $e<br />";
       } catch (Error $e) {
         $error_thrown = true;
         echo "Expected error thrown: $e<br />";
@@ -224,18 +170,6 @@ try {
       $error_thrown = !1;
       try {
         $fn();
-      } catch (PHPTesterException $e) {
-        $error_thrown = true;
-      } catch (TypeError $e) {
-        $error_thrown = true;
-      } catch (ParseError $e) {
-        $error_thrown = true;
-      } catch (DivisionByZeroError $e) {
-        $error_thrown = true;
-      } catch (AssertionError $e) {
-        $error_thrown = true;
-      } catch (ArithmeticError $e) {
-        $error_thrown = true;
       } catch (Error $e) {
         $error_thrown = true;
       } catch (ErrorException $e) {
@@ -282,16 +216,6 @@ try {
       return $array;
     }
   }
-} catch (TypeError $e) {
-  echo "Failed to load PHPTester<br />";
-} catch (ParseError $e) {
-  echo "Failed to load PHPTester<br />";
-} catch (DivisionByZeroError $e) {
-  echo "Failed to load PHPTester<br />";
-} catch (AssertionError $e) {
-  echo "Failed to load PHPTester<br />";
-} catch (ArithmeticError $e) {
-  echo "Failed to load PHPTester<br />";
 } catch (Error $e) {
   echo "Failed to load PHPTester<br />";
 } catch (ErrorException $e) {

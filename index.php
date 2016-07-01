@@ -428,5 +428,29 @@ $test->describe("PHPTester", function () {
       )
     ));
   });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new TypeError;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new ParseError;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new DivisionByZeroError;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new AssertionError;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new ArithmeticError;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new Error;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new ErrorException;
+  });
+  $test->it("should handle all types of errors and exceptions properly", function () {
+    throw new Exception;
+  });
 });
 ?>
