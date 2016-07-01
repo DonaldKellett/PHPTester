@@ -6,7 +6,7 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
 
-- Version Number: `v3.0.1`
+- Version Number: `v3.0.2`
 - Status: Stable - Production Ready
 - License: **MIT License**
 
@@ -144,6 +144,24 @@ PHPTester::expect_no_error($msg, $fn);
 ```
 
 Basically the opposite of `expect_error` - the test is passed if no error is thrown in the anonymous function and fails otherwise.
+
+#### Performance
+
+##### assert_max_execution_time (`v3.0.2`+)
+
+```php
+PHPTester::assert_max_execution_time($fn, $ms[, $msg[, $success]]);
+```
+
+`PHPTester::assert_max_execution_time` expects 2 arguments, the first argument `$fn` being the program to be executed and the second argument `$ms` being the time limit in milliseconds.  If the program is executed **under** the specified time limit then the test is passed; otherwise, it fails.  As with most of the pass/fail methods, `$msg` and `$success` are optional.
+
+##### assert_min_execution_time (`v3.0.2`+)
+
+```php
+PHPTester::assert_min_execution_time($fn, $ms[, $msg[, $success]]);
+```
+
+Basically the opposite of `PHPTester::assert_max_execution_time` - passes the test if the program is executed **over** the specified minimum time limit (`$ms`) and fails otherwise.
 
 ### Random Output Methods
 

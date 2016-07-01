@@ -2,7 +2,7 @@
 
 /*
   PHPTester
-  v3.0.0
+  v3.0.2
   A custom PHP TDD framework
   (c) Donald Leung.  All rights reserved.
   MIT Licensed
