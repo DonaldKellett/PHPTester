@@ -452,5 +452,14 @@ $test->describe("PHPTester", function () {
   $test->it("should handle all types of errors and exceptions properly", function () {
     throw new Exception;
   });
+  $test->it("should have a working assert_max_execution_time", function () {
+    global $test;
+    $test->assert_max_execution_time(function () {
+      $s = "";
+      for ($i = 0; $i < 1000000; $i++) {
+        $s .= "Hello World<br />";
+      }
+    }, 200);
+  });
 });
 ?>

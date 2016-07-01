@@ -34,6 +34,9 @@ try {
     // Numbers
     public function assert_fuzzy_equals($actual, $expected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
     public function assert_not_fuzzy_equals($actual, $unexpected, $precision = 5, $msg = "Default Message", $success = "Default Success Message");
+    // Performance
+    public function assert_max_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
+    public function assert_min_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
   }
   class PHPTesterException extends Exception {
     public function __construct($message, $code = 0, Exception $previous = null) {
@@ -178,6 +181,18 @@ try {
         $error_thrown = true;
       }
       $this->expect(!$error_thrown, "$msg: $e");
+    }
+    public function assert_max_execution_time($fn, $ms, $msg = "Program lacks efficiency", $success = "Test Passed") {
+      if (!is_int($ms) && !is_float($ms)) throw new TypeError("In PHPTester::assert_max_execution_time, \$ms must be a valid number!");
+      if (!is_int($ms)) throw new TypeError("In PHPTester::assert_max_execution_time, \$ms cannot be a float!");
+      if ($ms < 0) throw new TypeError("IN PHPTester::assert_max_execution_time, \$ms cannot be negative!");
+      $start = microtime(true);
+      $fn();
+      $dur = round((microtime(true) - $start) * 1000);
+      $this->expect($dur <= $ms, "$msg - Expected program to complete within " . $ms . "ms but program took " . $dur . "ms to complete", "$success - Program took " . $dur . "ms to complete (max allowed: " . $ms . "ms)");
+    }
+    public function assert_min_execution_time($fn, $ms, $msg = "Execution duration too short", $success = "Test Passed") {
+
     }
     protected function check_similar($actual, $expected) {
       if (is_null($actual) || is_null($expected) || is_bool($actual) || is_bool($expected) || is_string($actual) || is_string($expected) || is_int($actual) || is_int($expected) || is_float($actual) || is_float($expected)) return $actual === $expected;
