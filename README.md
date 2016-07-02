@@ -6,7 +6,7 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
 
-- Version Number: `v3.0.4`
+- Version Number: `v3.0.5`
 - Status: Stable - Production Ready
 - License: **MIT License**
 
@@ -89,7 +89,27 @@ Basically the opposite of `PHPTester::assert_equals` - the test is passed if `$a
 
 #### Numbers
 
-##### assert_fuzzy_equals (`v3.0.4`+)
+##### assert_fuzzy_equals (`v3.0.5`+)
+
+```php
+PHPTester::assert_fuzzy_equals($actual, $expected[, $range = 1e-12[, $msg[, $success]]]);
+```
+
+Similar to `assert_equals` except both `$actual` and `$expected` values must be valid **numbers** (type `int` or `float`) and `PHPTester::assert_fuzzy_equals` checks if `$actual` is within the range of `$expected +- $expected * $range`.  The optional **third** argument `$range` is `1e-12` by default.  As usual, the **fourth and fifth** (not the third and fourth this time!) arguments `$msg` and `$success` are optional.
+
+`PHPTester::assert_fuzzy_equals` is best suited for circumstances where rounding errors may occur due to floating point arithmetic.
+
+##### assert_not_fuzzy_equals (`v3.0.5`+)
+
+```php
+PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $range = 1e-12[, $msg[, $success]]]);
+```
+
+The opposite of `assert_fuzzy_equals`.  The test is passed if the value of `$actual` is **outside** the range of `$unexpected +- $unexpected * $range` and fails otherwise.
+
+##### assert_fuzzy_equals (`v3.0.4`)
+
+**NOTE: This version of `assert_fuzzy_equals` is no longer supported as of `v3.0.5`.**
 
 ```php
 PHPTester::assert_fuzzy_equals($actual, $expected[, $range = 1e-12[, $msg[, $success]]]);
@@ -99,13 +119,15 @@ Similar to `assert_equals` except both `$actual` and `$expected` values must be 
 
 `PHPTester::assert_fuzzy_equals` is best suited for circumstances where rounding errors may occur due to floating point arithmetic.
 
-##### assert_not_fuzzy_equals (`v3.0.4`+)
+##### assert_not_fuzzy_equals (`v3.0.4`)
+
+**NOTE: This version of `assert_not_fuzzy_equals` is no longer supported as of `v3.0.5`.**
 
 ```php
 PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $range = 1e-12[, $msg[, $success]]]);
 ```
 
-The opposite of `assert_fuzzy_equals`.  The test is passed if the value of `$actual` is **outside** the range of `$expected +- $range` and fails otherwise.
+The opposite of `assert_fuzzy_equals`.  The test is passed if the value of `$actual` is **outside** the range of `$unexpected +- $range` and fails otherwise.
 
 ##### assert_fuzzy_equals (`v3.0.0` - `v3.0.3`)
 
