@@ -143,12 +143,12 @@ try {
     public function assert_fuzzy_equals($actual, $expected, $range = 1e-12, $msg = "Actual value did not match expected", $success = "Test Passed") {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($expected) && !is_float($expected))) throw new TypeError("In PHPTester::assert_fuzzy_equals, both the actual and expected values must be valid numbers!");
       if (!is_float($range)) throw new TypeError("In PHPTester::assert_fuzzy_equals, \$range must be a valid number!");
-      $this->expect(abs($expected - $actual) <= $range, "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
+      $this->expect($expected == 0 ? abs($actual) <= $range : abs(($expected - $actual) / $expected) <= $range, "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
     }
     public function assert_not_fuzzy_equals($actual, $unexpected, $range = 1e-12, $msg = "Unexpected value returned", $success = "Test Passed") {
       if ((!is_int($actual) && !is_float($actual)) || (!is_int($unexpected) && !is_float($unexpected))) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, both the actual and unexpected values must be valid numbers!");
       if (!is_float($range)) throw new TypeError("In PHPTester::assert_not_fuzzy_equals, the \$range must be a valid number!");
-      $this->expect(abs($unexpected - $actual) >= $range, "$msg - Value was expected to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
+      $this->expect($unexpected == 0 ? abs($actual) >= $range : abs(($unexpected - $actual) / $unexpected) >= $range, "$msg - Value was expected to not equal: " . $this->display($unexpected), "$success - Value !== " . $this->display($unexpected));
     }
     public function assert_similar($actual, $expected, $msg = "Actual value did not match expected", $success = "Test Passed") {
       $this->expect($this->check_similar($actual, $expected), "$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual), "$success - Value === " . $this->display($expected));
