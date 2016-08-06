@@ -130,3 +130,22 @@ Argument Description:
 3. `$range` - *Optional*.  A tiny `float` value that specifies the maximum error as a fraction of the expected value.  It is `1e-12` by default (which will tolerate almost exact answers) but other suggested values include `1e-9` (pretty accurate) and `1e-6` (close-ish value).
 4. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
 5. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
+
+### Performance Assertions
+
+Interface: `PHPTesterPerformanceAssertions`
+
+#### assert_max_execution_time
+
+Executes a block of code and times how long it takes (in milliseconds) to execute that code.  The test is then passed if the execution duration is *shorter than* the specified duration (in milliseconds) and fails otherwise.
+
+**NOTE: The inverse of this assertion is `assert_min_execution_time` and takes the exact same arguments in the exact same order.**
+
+Argument Order: `$fn`, `$ms`, `$msg`, `$success`
+
+Argument Description:
+
+1. `$fn` - Required.  The block of code to be executed and timed (in the form of a function).
+2. `$ms` - Required.  The maximum acceptable execution duration in milliseconds.
+3. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
+4. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
