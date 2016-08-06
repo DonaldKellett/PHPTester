@@ -110,3 +110,23 @@ Argument Description:
 2. `$expected` - Required.  The **expected array structure** (to be returned by the code when it is functioning properly).
 3. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
 4. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
+
+### Number Assertions
+
+Interface: `PHPTesterNumberAssertions`
+
+#### assert_fuzzy_equals
+
+Compares two number values (`int` or `float`) to see if they are approximately equal to each other.  The test is successful if they are almost equal and fails otherwise.
+
+**NOTE: The inverse of this assertion is `assert_not_fuzzy_equals` and takes the exact same arguments in the same order.**
+
+Argument Order: `$actual`, `$expected`, `$range`, `$msg`, `$success`
+
+Argument Description:
+
+1. `$actual` - Required.  An `int` or `float` value **returned from the algorithm to be tested**.
+2. `$expected` - Required.  An `int` or `float` value which is the **expected (approximate) answer**.
+3. `$range` - *Optional*.  A tiny `float` value that specifies the maximum error as a fraction of the expected value.  It is `1e-12` by default (which will tolerate almost exact answers) but other suggested values include `1e-9` (pretty accurate) and `1e-6` (close-ish value).
+4. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
+5. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
