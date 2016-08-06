@@ -8,38 +8,63 @@
   MIT Licensed
 */
 
-interface PHPTesterInterface {
-  /* Spec Methods */
+/*
+  PHPTester Interfaces
+  @purpose To provide flexibility for senior PHP developers wanting to implement their own PHP testing framework in the likes of PHPTester
+  @goal To properly implement all PHPTester interfaces in the main 'PHPTester' class
+*/
+
+// Core Methods (Spec Methods, Core Assertion Method, Basic Value Comparison Assertions)
+
+interface PHPTesterCore {
   public function describe($msg, $fn);
   public function it($msg, $fn);
+  public function expect($passed, $msg = "Default Message", $success = "Default Success Message");
+  public function assert_equals($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
+  public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
+}
 
-  /* Random Output Methods */
+// Error Assertions
+
+interface PHPTesterErrorAssertions {
+  public function expect_error($msg, $fn);
+  public function expect_no_error($msg, $fn);
+}
+
+// Array Assertions
+
+interface PHPTesterArrayAssertions {
+  public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
+  public function assert_not_similar($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
+}
+
+// Number Assertions
+
+interface PHPTesterNumberAssertions {
+  public function assert_fuzzy_equals($actual, $expected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
+  public function assert_not_fuzzy_equals($actual, $unexpected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
+}
+
+// Performance Assertions
+
+interface PHPTesterPerformanceAssertions {
+  public function assert_max_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
+  public function assert_min_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
+}
+
+// Random Testing (to test other people's code when necessary)
+
+interface PHPTesterRandomTesting {
   public function random_number($min = 0, $max = 100);
   public function random_token($length = 10);
   public function randomize($array);
-
-  /* Pass/Fail Methods */
-  // Core
-  public function expect($passed, $msg = "Default Message", $success = "Default Success Message");
-  // Primitives
-  public function assert_equals($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
-  public function assert_not_equals($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
-  // Errors
-  public function expect_error($msg, $fn);
-  public function expect_no_error($msg, $fn);
-  // Arrays (and primitives)
-  public function assert_similar($actual, $expected, $msg = "Default Message", $success = "Default Success Message");
-  public function assert_not_similar($actual, $unexpected, $msg = "Default Message", $success = "Default Success Message");
-  // Numbers
-  public function assert_fuzzy_equals($actual, $expected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
-  public function assert_not_fuzzy_equals($actual, $unexpected, $range = 1e-12, $msg = "Default Message", $success = "Default Success Message");
-  // Performance
-  public function assert_max_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
-  public function assert_min_execution_time($fn, $ms, $msg = "Default Message", $success = "Default Success Message");
-
-  /* Miscellaneous */
-  public function get_execution_time($fn);
 }
+
+/*
+  PHPTester Exception Class
+  Used internally by the main class ('PHPTester') to provide a more human-readable error message when something goes wrong
+*/
+
 class PHPTesterException extends Exception {
   public function __construct($message, $code = 0, Exception $previous = null) {
       parent::__construct($message, $code, $previous);
@@ -48,7 +73,18 @@ class PHPTesterException extends Exception {
       return __CLASS__ . ": {$this->message}\n";
   }
 }
-class PHPTester implements PHPTesterInterface {
+
+/*
+  PHPTester (Main Class)
+  @implements PHPTesterCore
+  @implements PHPTesterArrayAssertions
+  @implements PHPTesterErrorAssertions
+  @implements PHPTesterNumberAssertions
+  @implements PHPTesterPerformanceAssertions
+  @implements PHPTesterRandomTesting
+*/
+
+class PHPTester implements PHPTesterCore, PHPTesterArrayAssertions, PHPTesterErrorAssertions, PHPTesterNumberAssertions, PHPTesterPerformanceAssertions, PHPTesterRandomTesting {
   protected $passes = 0;
   protected $fails = 0;
   protected $errors = 0;
@@ -237,11 +273,6 @@ class PHPTester implements PHPTesterInterface {
       list($array[$a], $array[$b]) = array($array[$b], $array[$a]);
     }
     return $array;
-  }
-  public function get_execution_time($fn) {
-    $start = microtime(true);
-    $fn();
-    return round((microtime(true) - $start) * 1000);
   }
 }
 
