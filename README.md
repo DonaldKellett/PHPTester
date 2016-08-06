@@ -91,3 +91,22 @@ Argument Description:
 
 1. `$msg` - Required.  The message to be displayed in case of a failed test.
 2. `$fn` - Required.  The function containing the code to be tested.
+
+### Array Assertions
+
+Interface: `PHPTesterArrayAssertions`
+
+#### assert_similar
+
+Compares two arrays and checks if they are the same recursively.  The test is successful if the two arrays are "the same" (in terms of structure) and fails otherwise.
+
+**NOTE: The inverse of this assertion is `assert_not_similar` and takes exactly the same arguments in the same order.**
+
+Argument Order: `$actual`, `$expected`, `$msg`, `$success`
+
+Argument Description:
+
+1. `$actual` - Required.  The **actual array returned by the code to be tested**.
+2. `$expected` - Required.  The **expected array structure** (to be returned by the code when it is functioning properly).
+3. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
+4. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
