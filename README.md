@@ -149,3 +149,44 @@ Argument Description:
 2. `$ms` - Required.  The maximum acceptable execution duration in milliseconds.
 3. `$msg` - *Optional*.  The message displayed upon failure.  Best practice is to provide it to aid debugging.
 4. `$success` - *Optional*.  The success message when a test is passed.  Not required and usually used internally.
+
+### Random Testing
+
+Interface: `PHPTesterRandomTesting`
+
+*Note: The random testing methods are best used in conjunction with a confirmed working algorithm/solution (as the source of validation) when using the testing framework to test others' code to prevent hard-coded (cheat) solutions.*
+
+#### random_number
+
+Returns a random integer in a specified range.
+
+Argument Order: `$min`, `$max`
+
+Argument Description:
+
+1. `$min` - *Optional*.  The minimum possible integer value that can be returned by the method.  Defaults to `0` if not specified.
+2. `$max` - *Optional*.  The maximum possible integer value that can be returned by the method.  Defaults to `100` if not specified.
+
+#### random_token
+
+Returns a randomly generated string of a specified length, containing only lowercase alphabet letters and/or digits.
+
+Argument Order: `$length`
+
+Argument Description:
+
+1. `$length` - *Optional*.  Specifies the length of the string to be randomly generated.
+
+#### randomize
+
+Receives a non-associative array as its only argument and returns a new array with the order of the elements shuffled.
+
+Argument Order: `$array`
+
+Argument Description:
+
+1. `$array` - Required.  The **non-associative** array to be shuffled and returned.  Please note that this method is **clean** which means that it does not mutate the original array; rather, it *returns* a new array with the order of the elements shuffled.
+
+### A note regarding implementing your own custom PHP testing framework by implementing the interfaces provided in this software
+
+If you are a senior PHP developer wanting to implement your own PHP testing framework by implementing certain interfaces predefined in this software, it is **highly recommended** that you implement `PHPTesterCore` before implementing any other interfaces.  Please also note that if your `assert_equals` method already handles arrays properly, it is then not required to implement `PHPTesterArrayAssertions`.
