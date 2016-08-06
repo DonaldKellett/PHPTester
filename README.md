@@ -74,3 +74,20 @@ Argument Description:
 2. `$expected` - Required.  Must be a **primitive** value (e.g. `bool`, `int`, `float`, `string`) and must be the expected return value, NOT the value returned by the algorithm being tested.  The test is successful if the actual return value is equal to this.
 3. `$msg` - *Optional*.  The message to be shown in case of a failed test.  Best practice is to provide it to aid debugging.
 4. `$success` - *Optional*.  The message to be shown when the test is successful.  Not required; usually used internally by other methods.
+
+### Error Assertions
+
+Interface: `PHPTesterErrorAssertions`
+
+#### expect_error
+
+Runs a function containing the code to be tested and catches any errors thrown in the process.  The test is successful if an `Error`/`ErrorException`/`Exception` is thrown and fails otherwise.
+
+**NOTE: `expect_no_error` is the inverse assertion of this method and takes exactly the same arguments in the same order.**
+
+Argument Order: `$msg`, `$fn`
+
+Argument Description:
+
+1. `$msg` - Required.  The message to be displayed in case of a failed test.
+2. `$fn` - Required.  The function containing the code to be tested.
