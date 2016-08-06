@@ -10,269 +10,67 @@ A custom PHP TDD Framework.  MIT Licensed.
 - Status: Stable - Production Ready
 - License: **MIT License**
 
-## A note regarding version number
+## Overview
 
-Since PHPTester is a continuation of the [PHP Test Fixture](https://github.com/DonaldKellett/PHP_Test_Fixture), please note that version numbers start from `v3.0.0` and **not** `v1.0.0`.  If you are searching for `v2.1.1` or earlier, please refer to [PHP Test Fixture](https://github.com/DonaldKellett/PHP_Test_Fixture) instead.
+**PHPTester** currently consists of three major components:
 
-## Class and Filename Renaming Notice (for `v2.1.1` or earlier users)
-
-Please note that as of `v3.0.0`, the class is no longer called `Test` but will instead be called `PHPTester`.  Additionally, the file is now named `class.phptester.php` instead of `class.test.php`.
-
-## Initialization
-
-Kindly follow the steps below to setup **PHPTester** and start using it:
-
-1. Include the following line at the top of your PHP file: `require '/path/to/your/class.phptester.php';`
-2. Create a `new` instance of `PHPTester` e.g. `$test = new PHPTester;`
-
-## Structure Overview
-
-The PHP code in `class.phptester.php` consists of three main parts:
-
-1. The `PHPTesterInterface` interface - this contains the names of all the methods available for use when performing TDD using an instance of `PHPTester`.  The interface itself provides no functionality - however, it provides valuable information to the user (i.e. YOU) as to what methods are available and what arguments it accepts.
-2. The `PHPTesterException` class - this is used internally by the main class so **please do not alter it unless you are very experienced with PHP exceptions and classes**
-3. The `PHPTester` class - this is the main class that you will be creating instances of when performing your Test-Driven Development.
+- Interfaces - these provide you with the correct guidelines to implement a custom PHP testing framework shall you want to implement your own (instead of directly using the PHP testing framework provided in this software) and should be extendable
+- The `PHPTesterException` class - this is used internally by the main class to generate more human-readable error messages in some cases.  It is extendable and can be used in your own code as well (shall you wish to do so).
+- The main class where everything is implemented - `PHPTester`.  Can be extended using the `extends` keyword.
 
 ## Documentation
 
-### Spec Methods
+Please note that the Documentation is only meant as a simple, brief guide on the methods available in the `PHPTester` testing framework and how to use them.  In case of doubt, please refer to the **demos** and if you still don't understand how a particular method works, feel free to [contact me](mailto:dleung@connect.kellettschool.com).
+
+### Core
+
+Interface: `PHPTesterCore`
 
 #### describe
 
-```php
-PHPTester::describe($msg, $fn);
-```
+Used to group a set of test cases to be executed.
 
-`PHPTester::describe` is the top-level spec method used to group a set of test cases.  It expects exactly 2 arguments, the first one being the description of the group of tests (`$msg`) which should be a string and the second one being the function in which the group of tests are to be executed.  Please note that although it is not compulsory to use `PHPTester::describe`, it is **highly recommended** that you do so as it provides valuable information regarding the number of passes/fails and the execution time.  It also handles any errors thrown inside the anonymous function (`$fn`) properly, allowing the rest of your PHP script to be executed as normal even if an error is thrown.
+Argument Order: `$msg`, `$fn`
+
+Argument Description:
+
+1. `$msg` - Required.  Specifies the message to be displayed to the screen which describes the set of tests to be executed.
+2. `$fn` - Required.  A function containing the set of test cases to be executed.
 
 #### it
 
-```php
-PHPTester::it($msg, $fn);
-```
+Used to group a *subset* of test cases to be executed.  Must be nested within the `describe` method.
 
-`PHPTester::it` is another spec method used to define, group and format a subset of test cases within a `describe` context.  Like `PHPTester::describe`, it expects exactly two arguments, `$msg` (a string message that describes the subset of test cases being executed) and `$fn` (the code to be executed).  It handles errors properly, allowing the rest of the test cases in the `describe` context to be executed even if an error is thrown in an individual `it` context.  Note that although it is not compulsory to use `it` contexts while testing, it is **highly recommended** for you to do so (although not so much as the `describe` context) as it makes the test output even more readable.
+Argument Order: `$msg`, `$fn`
 
-### Pass/Fail Methods
+Argument Description:
 
-#### Core
+1. `$msg` - Required.  Specifies the message to be displayed to the screen which describes the *subset* of tests to be executed.
+2. `$fn` - Required.  A function containing the *subset* of test cases to be executed.
 
-##### expect
+#### expect
 
-```php
-PHPTester::expect($passed[, $msg[, $success]]);
-```
+The core assertion method in which all other assertion methods are built on (in the main PHP testing framework class).  If you plan to implement your own testing framework, you are strongly advised to use this assertion method as a base assertion method.
 
-`PHPTester::expect` is the core assertion method used in `PHPTester` in which all other assertion (pass/fail) methods build on.  It expects one argument, `$passed`, which should ideally be a boolean (`true`/`false`) but can also be any other value.  The test is passed if the value provided (`$passed`) is truthy (anything other than `false`, `NULL`, `0` and an empty string `""`) and fails otherwise.
+Argument Order: `$passed`, `$msg`, `$success`
 
-The `$msg` (failing message) and `$success` (message upon success) arguments are optional. **However, it is considered good practice to provide a custom `$msg` (failing message) as the default failing message is very generic and provides no useful feedback as to what has failed.**
+Argument Description:
 
-#### Primitives
+1. `$passed` - Required.  Ideally a value of type `bool`.  If the value is truthy (or `true`) then the test is passed, else it fails.
+2. `$msg` - *Optional*.  The message to be displayed if the test fails.  However, **it is a best practice to provide this argument** to aid debugging.
+3. `$success` - *Optional*.  The message to be displayed upon a successful test.  This argument is not required and is usually used internally in other assertion methods.
 
-##### assert_equals
+#### assert_equals
 
-```php
-PHPTester::assert_equals($actual, $expected[, $msg[, $success]]);
-```
+A basic assertion method that compares two primitive values and passes the test if the two are equal.
 
-`PHPTester::assert_equals` is a pass/fail method used to compare two **primitive data types** (i.e. booleans, strings, integers, floats and `NULL`) and check if they are of the same value.  The test is passed if `$actual === $expected` and fails otherwise.  The `$msg` and `$success` parameters are optional but it is a good practice to provide a custom failing message (`$msg`).
+**NOTE: The inverse assertion of `assert_equals` is `assert_not_equals` and takes exactly the same arguments in the same order.**
 
-`PHPTester::assert_equals` (and all other "Primitive" assertion methods) will throw an error if either of `$actual` or `$expected` is an array or object (i.e. not a primitive).
+Argument Order: `$actual`, `$expected`, `$msg`, `$success`
 
-##### assert_not_equals
+Argument Description:
 
-```php
-PHPTester::assert_not_equals($actual, $unexpected[, $msg[, $success]]);
-```
-
-Basically the opposite of `PHPTester::assert_equals` - the test is passed if `$actual !== $unexpected` and fails otherwise.  Throws an error if either of `$actual` or `$unexpected` is not a primitive value.
-
-#### Numbers
-
-##### assert_fuzzy_equals (`v3.0.5`+)
-
-```php
-PHPTester::assert_fuzzy_equals($actual, $expected[, $range = 1e-12[, $msg[, $success]]]);
-```
-
-Similar to `assert_equals` except both `$actual` and `$expected` values must be valid **numbers** (type `int` or `float`) and `PHPTester::assert_fuzzy_equals` checks if `$actual` is within the range of `$expected +- $expected * $range`.  The optional **third** argument `$range` is `1e-12` by default.  As usual, the **fourth and fifth** (not the third and fourth this time!) arguments `$msg` and `$success` are optional.
-
-`PHPTester::assert_fuzzy_equals` is best suited for circumstances where rounding errors may occur due to floating point arithmetic.
-
-##### assert_not_fuzzy_equals (`v3.0.5`+)
-
-```php
-PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $range = 1e-12[, $msg[, $success]]]);
-```
-
-The opposite of `assert_fuzzy_equals`.  The test is passed if the value of `$actual` is **outside** the range of `$unexpected +- $unexpected * $range` and fails otherwise.
-
-##### assert_fuzzy_equals (`v3.0.4`)
-
-**NOTE: This version of `assert_fuzzy_equals` is no longer supported as of `v3.0.5`.**
-
-```php
-PHPTester::assert_fuzzy_equals($actual, $expected[, $range = 1e-12[, $msg[, $success]]]);
-```
-
-Similar to `assert_equals` except both `$actual` and `$expected` values must be valid **numbers** (type `int` or `float`) and `PHPTester::assert_fuzzy_equals` checks if `$actual` is within the range of `$expected +- $range`.  The optional **third** argument `$range` is `1e-12` by default.  As usual, the **fourth and fifth** (not the third and fourth this time!) arguments `$msg` and `$success` are optional.
-
-`PHPTester::assert_fuzzy_equals` is best suited for circumstances where rounding errors may occur due to floating point arithmetic.
-
-##### assert_not_fuzzy_equals (`v3.0.4`)
-
-**NOTE: This version of `assert_not_fuzzy_equals` is no longer supported as of `v3.0.5`.**
-
-```php
-PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $range = 1e-12[, $msg[, $success]]]);
-```
-
-The opposite of `assert_fuzzy_equals`.  The test is passed if the value of `$actual` is **outside** the range of `$unexpected +- $range` and fails otherwise.
-
-##### assert_fuzzy_equals (`v3.0.0` - `v3.0.3`)
-
-**NOTE: This version of `assert_fuzzy_equals` is no longer supported as of `v3.0.4`.**
-
-```php
-PHPTester::assert_fuzzy_equals($actual, $expected[, $precision = 5[, $msg[, $success]]]);
-```
-
-Compares two numbers, `$actual` and `$expected` to see if they round to the same number up to a certain `$precision` (in decimal places).  The test is passed if both numbers round to the same value and fails otherwise.  `$precision` is optional and defaults to `5` (decimal places) if not provided.  Again, `$msg` and `$success` are optional.
-
-An error is thrown if either of the two values provided is not a number.
-
-##### assert_not_fuzzy_equals (`v3.0.0` - `v3.0.3`)
-
-**NOTE: This version of `assert_not_fuzzy_equals` is no longer supported as of `v3.0.4`.**
-
-```php
-PHPTester::assert_not_fuzzy_equals($actual, $unexpected[, $precision = 5[, $msg[, $success]]]);
-```
-
-Basically the opposite of `PHPTester::assert_fuzzy_equals` - the test passes if both values do not round to the same number and fails otherwise.
-
-#### Arrays
-
-##### assert_similar
-
-```php
-PHPTester::assert_similar($actual, $expected[, $msg[, $success]]);
-```
-
-Compares two arrays, `$actual` and `$expected` to see if they have the same structure with the same values.  Passes the test if this is true and fails otherwise.  This method also works for primitives (and would behave like `assert_equals`).  `$msg` and `$success` are optional.
-
-Currently (`v3.0.0`), direct PHP object comparison is **not** supported by `PHPTester::assert_similar` and will throw an error if you attempt to do so.  However, in the near future, it is planned for `PHPTester::assert_similar` (and related methods) to support direct object comparison.
-
-##### assert_not_similar
-
-```php
-PHPTester::assert_not_similar($actual, $unexpected[, $msg[, $success]]);
-```
-
-Basically the opposite of `assert_similar` - passes the test if the two arrays are **not** similar in structure and values and fails otherwise.
-
-#### Errors
-
-##### expect_error
-
-```php
-PHPTester::expect_error($msg, $fn);
-```
-
-`PHPTester::expect_error` expects exactly 2 arguments, the first one being the message displayed upon failure (`$msg`) and the second one being the anonymous function `$fn` to be executed.  The test is passed if an error is thrown within the anonymous function and fails otherwise.
-
-##### expect_no_error
-
-```php
-PHPTester::expect_no_error($msg, $fn);
-```
-
-Basically the opposite of `expect_error` - the test is passed if no error is thrown in the anonymous function and fails otherwise.
-
-#### Performance
-
-##### assert_max_execution_time (`v3.0.2`+)
-
-```php
-PHPTester::assert_max_execution_time($fn, $ms[, $msg[, $success]]);
-```
-
-`PHPTester::assert_max_execution_time` expects 2 arguments, the first argument `$fn` being the program to be executed and the second argument `$ms` being the time limit in milliseconds.  If the program is executed **under** the specified time limit then the test is passed; otherwise, it fails.  As with most of the pass/fail methods, `$msg` and `$success` are optional.
-
-##### assert_min_execution_time (`v3.0.2`+)
-
-```php
-PHPTester::assert_min_execution_time($fn, $ms[, $msg[, $success]]);
-```
-
-Basically the opposite of `PHPTester::assert_max_execution_time` - passes the test if the program is executed **over** the specified minimum time limit (`$ms`) and fails otherwise.
-
-### Random Output Methods
-
-#### random_number
-
-```php
-PHPTester::random_number([$min = 0, $max = 100]);
-```
-
-Returns a random integer from `0` to `100` inclusive if `$min` and `$max` are not specified.  `$min` must be smaller than `$max` and both must be integers if provided.
-
-#### random_token
-
-```php
-PHPTester::random_token([$length = 10]);
-```
-
-Returns a random string of length `$length` (defaults to `10` if not specified) containing only lowercase letters and/or digits.
-
-#### randomize
-
-```php
-PHPTester::randomize($array);
-```
-
-Expects an array (that **cannot** be associative at the top level) as argument and returns a new array with the order of the elements randomized.  Does not mutate the original array.
-
-### Miscellaneous
-
-#### get_execution_time (`v3.0.3`+)
-
-```php
-PHPTester::get_execution_time($fn);
-```
-
-Executes a function `$fn` (the only argument passed in) and returns the execution time of the block of code in **milliseconds** to the nearest millisecond.
-
-## A Simple Example
-
-```php
-# Require class.phptester.php to start using PHPTester
-require '/path/to/your/class.phptester.php';
-
-# Create a new instance of PHPTester
-$test = new PHPTester;
-
-# Program your algorithm to be tested
-function multiply($a, $b) {
-  return $a * $b;
-}
-
-# Write your test cases (should ideally be written BEFORE you program your algorithm)
-$test->describe("The Multiply Function", function () {
-  global $test;
-  $test->it("should work for some positive integers", function () {
-    global $test;
-    $test->assert_equals(multiply(1, 1), 1);
-    $test->assert_equals(multiply(2, 4), 8);
-    $test->assert_equals(multiply(3, 5), 15);
-    $test->assert_equals(multiply(5, 3), 15);
-  });
-  $test->it("should also work for negative integers", function () {
-    global $test;
-    $test->assert_equals(multiply(-5, 3), -15);
-    $test->assert_equals(multiply(6, -7), -42);
-    $test->assert_equals(multiply(-8, -10), 80);
-    $test->assert_equals(multiply(-2, -4), 8);
-  });
-});
-```
+1. `$actual` - Required.  Must be a **primitive** value (e.g. `bool`, `int`, `float`, `string`) and must be the value returned by the algorithm being tested, NOT the expected return value.  The test is successful if this is equal to the expected return value.
+2. `$expected` - Required.  Must be a **primitive** value (e.g. `bool`, `int`, `float`, `string`) and must be the expected return value, NOT the value returned by the algorithm being tested.  The test is successful if the actual return value is equal to this.
+3. `$msg` - *Optional*.  The message to be shown in case of a failed test.  Best practice is to provide it to aid debugging.
+4. `$success` - *Optional*.  The message to be shown when the test is successful.  Not required; usually used internally by other methods.
