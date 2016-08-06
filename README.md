@@ -6,7 +6,7 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Version Details
 
-- Version Number: `v3.0.5`
+- Version Number: `v3.1.0`
 - Status: Stable - Production Ready
 - License: **MIT License**
 
