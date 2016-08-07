@@ -20,7 +20,7 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 ## Documentation
 
-Please note that the Documentation is only meant as a simple, brief guide on the methods available in the `PHPTester` testing framework and how to use them.  In case of doubt, please refer to the **demos** and if you still don't understand how a particular method works, feel free to [contact me](mailto:dleung@connect.kellettschool.com).
+Please note that the Documentation is only meant as a simple, brief guide on the methods available in the `PHPTester` testing framework and how to use them.  In case of doubt, please refer to the **demos** (in the `demo` folder) and if you still don't understand how a particular method works, feel free to [contact me](mailto:dleung@connect.kellettschool.com).
 
 ### Core
 
@@ -190,3 +190,9 @@ Argument Description:
 ### A note regarding implementing your own custom PHP testing framework by implementing the interfaces provided in this software
 
 If you are a senior PHP developer wanting to implement your own PHP testing framework by implementing certain interfaces predefined in this software, it is **highly recommended** that you implement `PHPTesterCore` before implementing any other interfaces.  Please also note that if your `assert_equals` method already handles arrays properly, it is then not required to implement `PHPTesterArrayAssertions`.
+
+## Demos
+
+Folder: `demo`
+
+1. `basic.php` - A basic demo regarding how to use the core PHPTester methods
