@@ -198,3 +198,4 @@ Folder: `demo`
 1. `basic.php` - A basic demo regarding how to use the core PHPTester methods
 2. `errors.php` - A simple introduction to the error-handling methods in PHPTester and when/how to use them
 3. `arrays.php` - A simple introduction to array assertion methods in PHPTester
+4. `numbers.php` - A simple introduction to number assertions in PHPTester
