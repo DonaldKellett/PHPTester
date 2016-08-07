@@ -200,3 +200,4 @@ Folder: `demo`
 3. `arrays.php` - A simple introduction to array assertion methods in PHPTester
 4. `numbers.php` - A simple introduction to number assertions in PHPTester
 5. `performance.php` - A simple introduction to performance assertions in PHPTester
+6. `random.php` - A simple introduction to random testing methods in PHPTester
