@@ -199,3 +199,4 @@ Folder: `demo`
 2. `errors.php` - A simple introduction to the error-handling methods in PHPTester and when/how to use them
 3. `arrays.php` - A simple introduction to array assertion methods in PHPTester
 4. `numbers.php` - A simple introduction to number assertions in PHPTester
+5. `performance.php` - A simple introduction to performance assertions in PHPTester

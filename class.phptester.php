@@ -113,7 +113,7 @@ class PHPTester implements PHPTesterCore, PHPTesterArrayAssertions, PHPTesterErr
       $this->errors++;
       echo "<span style='color:red'>$e</span><br />";
     }
-    $dur = ~~((microtime(true) - $start) * 1000.0);
+    $dur = round((microtime(true) - $start) * 1000.0);
     echo "</div>";
     echo "<hr />";
     echo "<span style='color:lime'>$this->passes Passed</span><br />";
