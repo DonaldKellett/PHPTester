@@ -196,3 +196,4 @@ If you are a senior PHP developer wanting to implement your own PHP testing fram
 Folder: `demo`
 
 1. `basic.php` - A basic demo regarding how to use the core PHPTester methods
+2. `errors.php` - A simple introduction to the error-handling methods in PHPTester and when/how to use them
