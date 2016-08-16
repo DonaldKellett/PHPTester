@@ -22,6 +22,18 @@ A custom PHP TDD Framework.  MIT Licensed.
 
 Please note that the Documentation is only meant as a simple, brief guide on the methods available in the `PHPTester` testing framework and how to use them.  In case of doubt, please refer to the **demos** (in the `demo` folder) and if you still don't understand how a particular method works, feel free to [contact me](mailto:dleung@connect.kellettschool.com).
 
+### Class Constants
+
+Class: `PHPTester`
+
+#### VERSION
+
+A string specifying the current version of `PHPTester` being used, e.g.
+
+```php
+echo PHPTester::VERSION; // v3.1.0
+```
+
 ### Core
 
 Interface: `PHPTesterCore`

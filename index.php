@@ -8,7 +8,7 @@
 
 require 'class.phptester.php';
 $test = new PHPTester;
-$test->describe("PHPTester", function () {
+$test->describe("PHPTester " . PHPTester::VERSION, function () {
   global $test;
   $test->it("should have a working 'expect' method", function () {
     global $test;

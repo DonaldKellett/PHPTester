@@ -85,6 +85,7 @@ class PHPTesterException extends Exception {
 */
 
 class PHPTester implements PHPTesterCore, PHPTesterArrayAssertions, PHPTesterErrorAssertions, PHPTesterNumberAssertions, PHPTesterPerformanceAssertions, PHPTesterRandomTesting {
+  const VERSION = "v3.1.0";
   protected $passes = 0;
   protected $fails = 0;
   protected $errors = 0;
